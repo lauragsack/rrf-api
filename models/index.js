@@ -15,4 +15,5 @@ module.exports = {
     User: require("./User"),
     Floatie: require("./Floatie"),
     Beach: require("./Beach"),
+    Reservation: require("./Reservation")
 }

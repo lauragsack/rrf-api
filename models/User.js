@@ -14,10 +14,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: [true, "Password is required"]
     },
-    favFloatie: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Floatie"
-    },
+    favFloatie: Floatie.schema,
     createdAt: {
         type: Date,
         default: Date.now
