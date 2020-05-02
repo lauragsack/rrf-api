@@ -12,7 +12,10 @@ const FloatieSchema = mongoose.Schema({
         index: String
     },
     price: Number,
-    reservations: [mongoose.Schema.Types.ObjectId]
+    reservations: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "Reservation"
+    }
 })
 
 const Floatie = mongoose.model("Floatie", UserSchema)

@@ -13,5 +13,6 @@ mongoose.connect(dbUrl, {
 // TODO: export models
 module.exports = {
     User: require("./User"),
-    Floatie: require("./Floatie")
+    Floatie: require("./Floatie"),
+    Beach: require("./Beach"),
 }
