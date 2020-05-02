@@ -18,6 +18,6 @@ const FloatieSchema = mongoose.Schema({
     }
 })
 
-const Floatie = mongoose.model("Floatie", UserSchema)
+const Floatie = mongoose.model("Floatie", FloatieSchema)
 
 module.exports = Floatie

@@ -10,7 +10,7 @@ mongoose.connect(dbUrl, {
     .then(() => console.log("MongoDB Connected"))
     .catch(err => console.log(`MongoDB error: ${err}`))
 
-// TODO: export models
+    
 module.exports = {
     User: require("./User"),
     Floatie: require("./Floatie"),

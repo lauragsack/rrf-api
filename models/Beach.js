@@ -5,8 +5,8 @@ const BeachSchema = new mongoose.Schema({
     name: String,
     address: String,
     location: {
-        lat: NumberDecimal,
-        lng: NumberDecimal
+        lat: Number,
+        lng: Number
     },
     rating: Number,
     numRatings: Number,

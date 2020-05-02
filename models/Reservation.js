@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const Floatie = require("./Floatie");
+const Beach = require("./Beach");
 
 const ReservationSchema = new mongoose.Schema({
     startDate: Date,

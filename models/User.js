@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Floatie = require("./Floatie");
 
 const UserSchema = new mongoose.Schema({
     name: {
