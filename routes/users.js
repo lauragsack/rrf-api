@@ -7,4 +7,7 @@ const ctrl = require("../controllers");
 // get user's profile using ID
 router.get("/:id", ctrl.users.show)
 
+// get all users (TODO: delete after testing)
+router.get("/", ctrl.users.index)
+
 module.exports = router;

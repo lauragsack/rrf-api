@@ -9,8 +9,16 @@ require("dotenv").config()
 
 const routes = require("./routes")
 
-
 // MIDDLEWARE
+
+// Handle Cors
+const corsOptions = {
+    origin: ["http://localhost:3000"],
+    credentials: true,
+    optionsSuccessStatus: 200
+}
+
+app.use(cors(corsOptions))
 
 // Logging with Morgan
 app.use(morgan("tiny"))

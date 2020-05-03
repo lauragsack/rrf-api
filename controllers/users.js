@@ -13,7 +13,12 @@ const show = (req, res) => {
     })
 }
 
+const index = (Req, res) => {
+    db.User.find
+}
+
 
 module.exports = {
     show,
+    index
 }
