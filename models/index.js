@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const dbUrl = process.env.MONGO_URI || 'mongodb://localhost:27017/rrf';
+const dbUrl = process.env.MONGO_URI;
 
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
