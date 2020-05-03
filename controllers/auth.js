@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 
 // POST create new user (signup)
 const signup = (req, res) => {
-    if (!req.body.name || req.body.email || req.body.password) {
+    if (!req.body.name || !req.body.email || !req.body.password) {
         return res.status(400).json({status: 400, message: "Please enter a name, email, and password."})
     }
     db.User.findOne({ email: req.body.email }, (err, foundUser) => {
@@ -48,7 +48,7 @@ const login = (req, res) => {
             if (err) return res.status(500).json({status: 500, message: "Something went wrong. Please try again."});
 
             if (isMatch) {
-                req.ression.currentUser = {id: foundUser._id};
+                req.session.currentUser = {id: foundUser._id};
                 return res.status(200).json({status: 200, message: "Success", data: foundUser._id});
             } else {
                 return res.status(400).json({status: 400, message: "Email or password is incorrect."})
@@ -59,6 +59,7 @@ const login = (req, res) => {
 
 // GET verify user
 const verify = (req, res) => {
+    if (!req.session.currentUser) return res.status(401).json({status: 401, message: "Unauthorized."})
     res.status(200).json({status: 200, message: `Current user verified. User ID: ${req.session.currentUser.id}`})
 }
 

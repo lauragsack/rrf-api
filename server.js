@@ -12,6 +12,9 @@ const routes = require("./routes")
 
 // MIDDLEWARE
 
+// Logging with Morgan
+app.use(morgan("tiny"))
+
 // BodyParser
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
