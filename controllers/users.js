@@ -1,6 +1,10 @@
 const db = require("../models");
+const auth = require("./auth")
 
 const show = (req, res) => {
+    if (!req.session.currentUser) {
+        return res.status(401).json({status: 401, message: "Unauthorized."})
+    }
     db.User.findById(req.params.id, (err, foundUser) => {
         if (err) return res.status(500).json({
             status: 500,
@@ -12,6 +16,7 @@ const show = (req, res) => {
         })
     })
 }
+
 
 const index = (req, res) => {
     db.User.find({}, (err, allUsers) => {

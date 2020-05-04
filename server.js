@@ -1,13 +1,13 @@
-const express = require("express")
-const bodyParser = require("body-parser")
-const session = require("express-session")
-const MongoStore = require("connect-mongo")(session)
-const morgan = require("morgan")
-const cors = require("cors")
-const app = express()
-require("dotenv").config()
+const express = require("express");
+const bodyParser = require("body-parser");
+const session = require("express-session");
+const MongoStore = require("connect-mongo")(session);
+const morgan = require("morgan");
+const cors = require("cors");
+const app = express();
+require("dotenv").config();
 
-const routes = require("./routes")
+const routes = require("./routes");
 
 // MIDDLEWARE
 
@@ -47,7 +47,7 @@ app.get("/", (req, res) => {
 app.use("/api/v1/users", routes.users)
 app.use("/api/v1/auth", routes.auth)
 app.use("/api/v1/floaties", routes.floaties)
-// app.use("/api/v1/reservations", routes.reservations)
+app.use("/api/v1/reservations", routes.reservations)
 app.use("/api/v1/beaches", routes.beaches)
 
 // SERVER

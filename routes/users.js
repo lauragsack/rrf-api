@@ -4,7 +4,7 @@ const ctrl = require("../controllers");
 
 // PATH = /api/v1/auth
 
-// get user's profile using ID
+// get user by Id
 router.get("/:id", ctrl.users.show)
 
 // get all users (TODO: delete after testing)
