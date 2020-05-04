@@ -7,10 +7,7 @@ const FloatieSchema = mongoose.Schema({
     goodFor: Number,
     deliverable: Boolean,
     dogFriendly: Boolean,
-    photos: {
-        show: String,
-        index: String
-    },
+    photo: String,
     price: Number,
     reservations: {
         type: [mongoose.Schema.Types.ObjectId],

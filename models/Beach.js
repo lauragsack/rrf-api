@@ -10,7 +10,7 @@ const BeachSchema = new mongoose.Schema({
     },
     rating: Number,
     numRatings: Number,
-    photo: {
+    photos: {
         html_attributions: String,
         height: Number,
         width: Number,

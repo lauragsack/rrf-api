@@ -13,8 +13,13 @@ const show = (req, res) => {
     })
 }
 
-const index = (Req, res) => {
-    db.User.find
+const index = (req, res) => {
+    db.User.find({}, (err, allUsers) => {
+        if (err) {
+            return res.status(500).json({status: 400, error: "Something went wrong."})
+        }
+        res.json(allUsers)
+    })
 }
 
 
