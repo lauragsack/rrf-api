@@ -127,7 +127,7 @@ async function createBeaches() {
             location: beach.geometry.location,
             rating: beach.rating,
             numRatings: beach.user_ratings_total,
-            photos: beach.photos,
+            photo: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${beach.photos[0].width}&photoreference=${beach.photos[0].photo_reference}&key=${key}`,
             place_id: beach.place_id,
             reservations: []
         }
