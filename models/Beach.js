@@ -10,12 +10,7 @@ const BeachSchema = new mongoose.Schema({
     },
     rating: Number,
     numRatings: Number,
-    photos: {
-        html_attributions: String,
-        height: Number,
-        width: Number,
-        photo_reference: String,
-    },
+    photo: String,
     reservations: {
         type: [mongoose.Schema.Types.ObjectId],
         ref: "Reservation"
