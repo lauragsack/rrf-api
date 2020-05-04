@@ -5,16 +5,16 @@ const ctrl = require("../controllers");
 // PATH = /api/v1/reservations
 
 // Get user's reservations
-router.get("/user", ctrl.reservations.userReservations)
+router.get("/:userId", ctrl.reservations.userReservations)
 
 // Create reservation
-// router.post("/", ctrl.reservations.create)
+router.post("/", ctrl.reservations.create)
 
-// // Update reservation
-// router.put("/:reservationId", ctrl.reservations.update)
+// Update reservation
+router.put("/:reservationId", ctrl.reservations.update)
 
-// // Delete reservation
-// router.delete("/:reservationId", ctrl.reservations.remove)
+// Delete reservation
+router.delete("/:reservationId", ctrl.reservations.remove)
 
 
 module.exports = router;

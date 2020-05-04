@@ -1,5 +1,4 @@
 const db = require("../models");
-const auth = require("./auth")
 
 const show = (req, res) => {
     if (!req.session.currentUser) {
@@ -17,7 +16,7 @@ const show = (req, res) => {
     })
 }
 
-
+// TODO - delete this controller after testing
 const index = (req, res) => {
     db.User.find({}, (err, allUsers) => {
         if (err) {

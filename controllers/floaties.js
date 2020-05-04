@@ -25,8 +25,6 @@ const update = (req, res) => {
             return res.status(500).json({status: 500, error: "Something went wrong, please try again."})
         }
 
-        console.log("logging foundFloatie", foundFloatie)
-
         foundFloatie.name = req.body.name;
         foundFloatie.photo = req.body.photo;
         
