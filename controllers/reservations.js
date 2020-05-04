@@ -23,33 +23,34 @@ const create = (req, res) => {
         }
         newReservation.user = req.session.currentUser.id;
 
-        let beachToUpdate = newReservation.pickupAddress;
-        console.log("--------------------")
-        console.log("logging beach to update", beachToUpdate)
-        console.log("--------------------")
-        beachToUpdate.reservations.push(newReservation.id)
+        // let beachToUpdate = newReservation.pickupAddress;
+        // console.log("--------------------")
+        // console.log("logging beach to update", beachToUpdate)
+        // console.log("--------------------")
+        // beachToUpdate.reservations.push(newReservation.id)
     
-        beachToUpdate.save((err, savedBeach) => {
-            if (err) {
-                return res.status(500).json({status: 500, error: "Something went wrong."})
-            }
-            console.log("--------------------")
-            console.log("logging updated beach", savedBeach);
-            console.log("--------------------")
-        })
+        // beachToUpdate.save((err, savedBeach) => {
+        //     if (err) {
+        //         return res.status(500).json({status: 500, error: "Something went wrong."})
+        //     }
+        //     console.log("--------------------")
+        //     console.log("logging updated beach", savedBeach);
+        //     console.log("--------------------")
+        // })
 
-        let floatiesToUpdate = newReservation.floaties
-        floatiesToUpdate.forEach(floatie => {
-            floatie.floatie.reservations.push(newReservation.id)
-            floatie.floatie.save((err, savedFloatie) => {
-                if (err) {
-                    return res.status(500).json({status: 500, error: "Something went wrong."})
-                }
-                console.log("--------------------")
-                console.log("logging updated floatie", savedFloatie)
-                console.log("--------------------")
-            })
-        })
+        // let floatiesToUpdate = newReservation.floaties
+        // floatiesToUpdate.forEach(floatie => {
+        //     floatie.floatie.reservations.push(newReservation.id)
+        //     floatie.floatie.save((err, savedFloatie) => {
+        //         if (err) {
+        //             return res.status(500).json({status: 500, error: "Something went wrong."})
+        //         }
+        //         console.log("--------------------")
+        //         console.log("logging updated floatie", savedFloatie)
+        //         console.log("--------------------")
+        //     })
+        // })
+        
         res.json(newReservation)
     })
 }
