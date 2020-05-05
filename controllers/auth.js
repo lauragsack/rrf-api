@@ -26,7 +26,7 @@ const signup = (req, res) => {
 
                 db.User.create(newUser, (err, savedUser) => {
                     if (err) return res.status(500).json({ status: 500, message: err })
-                    return res.status(200).json({ status: 200, message: "User signed up!"})
+                    return res.status(200).json({user: savedUser, status: 200, message: "User signed up!"})
                 })
             })
         })
