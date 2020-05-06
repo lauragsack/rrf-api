@@ -26,7 +26,10 @@ const signup = (req, res) => {
 
                 db.User.create(newUser, (err, savedUser) => {
                     if (err) return res.status(500).json({ status: 500, message: err })
-                    return res.status(200).json({user: savedUser, status: 200, message: "User signed up!"})
+                    req.session.currentUser = {id: savedUser._id};
+                    console.log(savedUser)
+                    console.log("Logging req.session.currentUser", req.session.currentUser)
+                    return res.status(200).json({user: savedUser._id, status: 200, message: "User signed up!"})
                 })
             })
         })
@@ -39,13 +42,13 @@ const login = (req, res) => {
         return res.status(400).json({status: 400, message: "Please enter your email and password." });
     }
     db.User.findOne({email: req.body.email}, (err, foundUser) => {
-        if (err) return res.status(500).json({status: 500, message: "Something went wrong. Please try again."});
+        if (err) return res.status(500).json({status: 500, message: "Email not found - Something went wrong. Please try again."});
 
         if (!foundUser) {
             return res.status(400).json({status: 400, message: "We don't recognize that email or password. Please try again."});
         }
         bcrypt.compare(req.body.password, foundUser.password, (err, isMatch) => {
-            if (err) return res.status(500).json({status: 500, message: "Something went wrong. Please try again."});
+            if (err) return res.status(500).json({error: err, status: 500, message: "Bcrypt - Something went wrong. Please try again."});
 
             if (isMatch) {
                 req.session.currentUser = {id: foundUser._id};
@@ -65,6 +68,7 @@ const verify = (req, res) => {
 
 // DELETE logout user
 const logout = (req, res) => {
+    console.log(req.session)
     if (!req.session.currentUser) return res.status(401).json({status: 401, message: "Unauthorized."})
 
     req.session.destroy((err) => {

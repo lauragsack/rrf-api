@@ -11,15 +11,6 @@ const allReservations = (req, res) => {
     })
 }
 
-// TODO - delete this after testing
-const reservationShow = (req, res) => {
-    db.Reservation.findById(req.params.id, (err, foundReservation) => {
-        if (err) {
-            return res.status(500).json({status: 500, error: "Something went wrong."})
-        }
-        res.json(foundReservation)
-    })
-}
 
 const userReservations = (req, res) => {
     if (!req.session.currentUser) {
@@ -147,7 +138,6 @@ module.exports = {
     update,
     remove,
     // TODO - delete below after testing
-    reservationShow,
     allReservations,
     removeAllReservations
 }

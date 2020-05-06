@@ -21,7 +21,5 @@ router.get("/", ctrl.reservations.allReservations)
 
 router.delete("/", ctrl.reservations.removeAllReservations)
 
-router.get("/:id", ctrl.reservations.reservationShow)
-
 
 module.exports = router;
