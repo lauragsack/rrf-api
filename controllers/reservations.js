@@ -1,10 +1,9 @@
 const db = require("../models");
 
-const userReservations = (req, res) => {
-    if (!req.session.currentUser) {
-        return res.status(401).json({status: 401, message: "Unauthorized."})
-    }
-    db.Reservation.find({userId: req.session.currentUser.Id}, (err, foundReservations) => {
+
+// TODO - delete this after testing
+const allReservations = (req, res) => {
+    db.Reservation.find({}, (err, foundReservations) => {
         if (err) {
             return res.status(500).json({status: 500, error: "Something went wrong."})
         }
@@ -12,17 +11,40 @@ const userReservations = (req, res) => {
     })
 }
 
+
+const userReservations = (req, res) => {
+    if (!req.session.currentUser) {
+        return res.status(401).json({status: 401, message: "Unauthorized."})
+    }
+    console.log(req.session.currentUser.id)
+
+
+    db.Reservation.find({user: req.session.currentUser.id}, (err, foundReservations) => {
+        if (err) {
+            return res.status(500).json({status: 500, error: "Something went wrong."})
+        }
+        res.json(foundReservations)
+    })
+}
+
+
 // TODO - fix save issue for beach and floatie to update
 const create = (req, res) => {
     if (!req.session.currentUser) {
         return res.status(401).json({status: 401, message: "Unauthorized."})
     }
+
     db.Reservation.create(req.body, (err, newReservation) => {
         if (err) {
             return res.status(500).json({status: 500, error: "Something went wrong."})
         }
-        newReservation.user = req.session.currentUser.id;
 
+        newReservation.user = req.session.currentUser.id;
+        newReservation.save((err, savedReservation) => {
+            if (err) {
+                return res.status(500).json({status: 500, message: "Something went wrong, please try again."})
+            }
+        
         // let beachToUpdate = newReservation.pickupAddress;
         // console.log("--------------------")
         // console.log("logging beach to update", beachToUpdate)
@@ -34,7 +56,7 @@ const create = (req, res) => {
         //         return res.status(500).json({status: 500, error: "Something went wrong."})
         //     }
         //     console.log("--------------------")
-        //     console.log("logging updated beach", savedBeach);
+        //     console.log("logging updated beach:", savedBeach);
         //     console.log("--------------------")
         // })
 
@@ -46,12 +68,13 @@ const create = (req, res) => {
         //             return res.status(500).json({status: 500, error: "Something went wrong."})
         //         }
         //         console.log("--------------------")
-        //         console.log("logging updated floatie", savedFloatie)
+        //         console.log("logging updated floatie:", savedFloatie)
         //         console.log("--------------------")
         //     })
         // })
         
-        res.json(newReservation)
+        res.json(savedReservation)
+        })
     })
 }
 
@@ -99,9 +122,22 @@ const remove = (req, res) => {
     })
 }
 
+// TODO - delete this after testing
+const removeAllReservations = (req, res) => {
+    db.Reservation.deleteMany({}, (err, deletedReservations) => {
+        if (err) {
+            return res.status(500).json({status: 500, message: "Something went wrong, please try again."})
+        }
+        res.json(deletedReservations)
+    })
+}
+
 module.exports = {
     userReservations,
     create,
     update,
-    remove
+    remove,
+    // TODO - delete below after testing
+    allReservations,
+    removeAllReservations
 }
