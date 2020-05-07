@@ -111,9 +111,10 @@ const update = (req, res) => {
 
 // TODO - splice reservationId from beach.reservations and floatie.reservations
 const remove = (req, res) => {
-    if (!req.session.currentUser) {
-        return res.status(401).json({status: 401, message: "Unauthorized."})
-    }
+    // console.log(req.session)
+    // if (!req.session.currentUser) {
+    //     return res.status(401).json({status: 401, message: "Unauthorized."})
+    // }
     db.Reservation.findByIdAndDelete(req.params.reservationId, (err, deletedReservation) => {
         if (err) {
             return res.status(500).json({status: 500, message: "Something went wrong, please try again."})
