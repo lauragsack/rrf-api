@@ -7,7 +7,7 @@ const ctrl = require("../controllers");
 // get all floaties
 router.get("/", ctrl.floaties.index)
 
-// get a floatie by Id
+// get a floatie by name
 router.get("/:name", ctrl.floaties.show)
 
 // TODO - delete this route when done testing
