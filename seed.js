@@ -96,15 +96,15 @@ const newFloatie = [
     },
 ];
 
-// db.Floatie.insertMany(newFloatie, (err, floatie) => {
-//     if (err) {
-//         console.log(err);
-//         process.exit();
-//     } else {
-//         console.log("Created new floatie", floatie);
-//         process.exit();
-//     }
-// });
+db.Floatie.insertMany(newFloatie, (err, floatie) => {
+    if (err) {
+        console.log(err);
+        process.exit();
+    } else {
+        console.log("Created new floatie", floatie);
+        process.exit();
+    }
+});
 
 // db.Floatie.deleteMany({}, (err, result) => {
 //     if (err) {
