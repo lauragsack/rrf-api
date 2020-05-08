@@ -30,52 +30,63 @@ const userReservations = (req, res) => {
 
 // TODO - fix save issue for beach and floatie to update
 const create = (req, res) => {
+    console.log("--------------------------------")
+    console.log("req.body", req.body)
+    console.log("--------------------------------")
     if (!req.session.currentUser) {
         return res.status(401).json({status: 401, message: "Unauthorized."})
     }
 
-    db.Reservation.create(req.body, (err, newReservation) => {
-        if (err) {
-            return res.status(500).json({status: 500, error: "Something went wrong."})
-        }
+   let reservation = {
+        user: req.body.user,
+        startDate: req.body.startDate,
+        endDate: req.body.endDate,
+        totalPrice: req.body.totalPrice,
+        type: req.body.type,
+        deliveryAddress: req.body.deliveryAddress,
+        pickupAddress: req.body.pickupAddress,
+        floaties: []
+    }
 
-        newReservation.user = req.session.currentUser.id;
-        newReservation.save((err, savedReservation) => {
+    if (reservation.pickupAddress !== "") {
+        db.Beach.findById(reservation.pickupAddress, (err, foundBeach) => {
             if (err) {
-                return res.status(500).json({status: 500, message: "Something went wrong, please try again."})
+                return res.status(500).json({status: 500, error: "Something went wrong."})
             }
-        
-        // let beachToUpdate = newReservation.pickupAddress;
-        // console.log("--------------------")
-        // console.log("logging beach to update", beachToUpdate)
-        // console.log("--------------------")
-        // beachToUpdate.reservations.push(newReservation.id)
-    
-        // beachToUpdate.save((err, savedBeach) => {
-        //     if (err) {
-        //         return res.status(500).json({status: 500, error: "Something went wrong."})
-        //     }
-        //     console.log("--------------------")
-        //     console.log("logging updated beach:", savedBeach);
-        //     console.log("--------------------")
-        // })
+            console.log("foundBeach", foundBeach)
+            reservation.pickupAddress = foundBeach;
 
-        // let floatiesToUpdate = newReservation.floaties
-        // floatiesToUpdate.forEach(floatie => {
-        //     floatie.floatie.reservations.push(newReservation.id)
-        //     floatie.floatie.save((err, savedFloatie) => {
-        //         if (err) {
-        //             return res.status(500).json({status: 500, error: "Something went wrong."})
-        //         }
-        //         console.log("--------------------")
-        //         console.log("logging updated floatie:", savedFloatie)
-        //         console.log("--------------------")
-        //     })
-        // })
-        
-        res.json(savedReservation)
+            console.log("--------------------------------")
+            console.log("pickupAddress", reservation.pickupAddress)
+            console.log("--------------------------------")
         })
-    })
+    
+
+        req.body.floaties.forEach(floatie => {
+            db.Floatie.findById(floatie.floatie, (err, foundFloatie) => {
+                if (err) {
+                    return res.status(500).json({status: 500, error: "Something went wrong."})
+                }
+                console.log("foundFloatie", foundFloatie)
+                reservation.floaties.push({floatie: foundFloatie, quantity: floatie.quantity});
+
+                console.log("--------------------------------")
+                console.log("floaties", reservation.floaties)
+                console.log("--------------------------------")
+            })
+        })    
+
+        console.log("--------------------------------")
+        console.log("reservation", reservation)
+        console.log("--------------------------------")
+        db.Reservation.create(reservation, (err, newReservation) => {
+
+            if (err) {
+                return res.status(500).json({status: 500, error: "Something went wrong."})
+            }
+            res.json(newReservation)
+        })
+    }
 }
 
 // TODO - update floatie.reservations and beach.reservations
@@ -109,12 +120,8 @@ const update = (req, res) => {
     })
 }
 
-// TODO - splice reservationId from beach.reservations and floatie.reservations
+
 const remove = (req, res) => {
-    // console.log(req.session)
-    // if (!req.session.currentUser) {
-    //     return res.status(401).json({status: 401, message: "Unauthorized."})
-    // }
     db.Reservation.findByIdAndDelete(req.params.reservationId, (err, deletedReservation) => {
         if (err) {
             return res.status(500).json({status: 500, message: "Something went wrong, please try again."})
