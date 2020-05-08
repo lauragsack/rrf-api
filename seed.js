@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const db = require("./models");
 require("dotenv").config()
-const dbUrl = process.env.MONGO_URI;
+const dbUrl = process.env.MONGODB_URI ;
 const key = process.env.KEY;
 const fetch = require('node-fetch');
 

@@ -51,6 +51,4 @@ app.use("/api/v1/reservations", routes.reservations)
 app.use("/api/v1/beaches", routes.beaches)
 
 // SERVER
-app.listen(3001, () => {
-    return console.log(`Server connected http://localhost:3001`)
-})
+app.listen(process.env.PORT || 3001)
