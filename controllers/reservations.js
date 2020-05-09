@@ -12,13 +12,21 @@ const allReservations = (req, res) => {
 }
 
 
+const show = (req, res) => {
+    db.Reservation.findById(req.params.reservationId, (err, foundReservation) => {
+        if (err) {
+            return res.status(500).json({status: 500, error: "Something went wrong."})
+        }
+        res.json(foundReservation)
+    })
+}
+
+
 const userReservations = (req, res) => {
     if (!req.session.currentUser) {
         return res.status(401).json({status: 401, message: "Unauthorized."})
     }
-    console.log(req.session.currentUser.id)
-
-
+    
     db.Reservation.find({user: req.session.currentUser.id}, (err, foundReservations) => {
         if (err) {
             return res.status(500).json({status: 500, error: "Something went wrong."})
@@ -28,7 +36,7 @@ const userReservations = (req, res) => {
 }
 
 
-// TODO - fix save issue for beach and floatie to update
+// TODO - fix saving floaties
 const create = (req, res) => {
     if (!req.session.currentUser) {
         return res.status(401).json({status: 401, message: "Unauthorized."})
@@ -44,6 +52,8 @@ const create = (req, res) => {
         pickupAddress: req.body.pickupAddress,
         floaties: []
     }
+
+    // this works but doesn't make it into db.create
     req.body.floaties.forEach(floatie => {
         db.Floatie.findById(floatie.floatie, (err, foundFloatie) => {
             if (err) {
@@ -89,7 +99,7 @@ const create = (req, res) => {
     }
 }
 
-// TODO - update floatie.reservations and beach.reservations
+
 const update = (req, res) => {
     if (!req.session.currentUser) {
         return res.status(401).json({status: 401, message: "Unauthorized."})
@@ -149,6 +159,7 @@ module.exports = {
     create,
     update,
     remove,
+    show,
     // TODO - delete below after testing
     allReservations,
     removeAllReservations
