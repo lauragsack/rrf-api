@@ -34,48 +34,59 @@ const create = (req, res) => {
         return res.status(401).json({status: 401, message: "Unauthorized."})
     }
 
-    db.Reservation.create(req.body, (err, newReservation) => {
+   let reservation = {
+        user: req.body.user,
+        startDate: req.body.startDate,
+        endDate: req.body.endDate,
+        totalPrice: req.body.totalPrice,
+        type: req.body.type,
+        deliveryAddress: req.body.deliveryAddress,
+        pickupAddress: req.body.pickupAddress,
+        floaties: []
+    }
+    req.body.floaties.forEach(floatie => {
+        db.Floatie.findById(floatie.floatie, (err, foundFloatie) => {
+            if (err) {
+                return res.status(500).json({status: 500, error: "Something went wrong."})
+            }
+            console.log("foundFloatie", foundFloatie)
+            reservation.floaties.push({floatie: foundFloatie, quantity: floatie.quantity});
+            console.log("--------------------------------")
+            console.log("floaties", reservation.floaties)
+            console.log("--------------------------------")
+    })
+})
+
+    if (reservation.pickupAddress !== "") {
+        db.Beach.findById(reservation.pickupAddress, (err, foundBeach) => {
+            if (err) {
+                return res.status(500).json({status: 500, error: "Something went wrong."})
+            }
+            reservation.pickupAddress = foundBeach;
+ 
+            db.Reservation.create(reservation, (err, newReservation) => {
+                console.log("--------------------------------")
+                console.log("reservation", reservation)
+                console.log("--------------------------------")
+        
+            if (err) {
+                return res.status(500).json({status: 500, error: "Something went wrong."})
+            }
+            res.json(newReservation)
+            }) 
+        })
+    } else {
+        db.Reservation.create(reservation, (err, newReservation) => {
+            console.log("--------------------------------")
+            console.log("reservation", reservation)
+            console.log("--------------------------------")
+    
         if (err) {
             return res.status(500).json({status: 500, error: "Something went wrong."})
         }
-
-        newReservation.user = req.session.currentUser.id;
-        newReservation.save((err, savedReservation) => {
-            if (err) {
-                return res.status(500).json({status: 500, message: "Something went wrong, please try again."})
-            }
-        
-        // let beachToUpdate = newReservation.pickupAddress;
-        // console.log("--------------------")
-        // console.log("logging beach to update", beachToUpdate)
-        // console.log("--------------------")
-        // beachToUpdate.reservations.push(newReservation.id)
-    
-        // beachToUpdate.save((err, savedBeach) => {
-        //     if (err) {
-        //         return res.status(500).json({status: 500, error: "Something went wrong."})
-        //     }
-        //     console.log("--------------------")
-        //     console.log("logging updated beach:", savedBeach);
-        //     console.log("--------------------")
-        // })
-
-        // let floatiesToUpdate = newReservation.floaties
-        // floatiesToUpdate.forEach(floatie => {
-        //     floatie.floatie.reservations.push(newReservation.id)
-        //     floatie.floatie.save((err, savedFloatie) => {
-        //         if (err) {
-        //             return res.status(500).json({status: 500, error: "Something went wrong."})
-        //         }
-        //         console.log("--------------------")
-        //         console.log("logging updated floatie:", savedFloatie)
-        //         console.log("--------------------")
-        //     })
-        // })
-        
-        res.json(savedReservation)
-        })
-    })
+        res.json(newReservation)
+        }) 
+    }
 }
 
 // TODO - update floatie.reservations and beach.reservations
