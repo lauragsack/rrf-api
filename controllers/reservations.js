@@ -38,6 +38,7 @@ const userReservations = (req, res) => {
 
 // TODO - fix saving floaties
 const create = (req, res) => {
+    console.log("req.body:", req.body)
     if (!req.session.currentUser) {
         return res.status(401).json({status: 401, message: "Unauthorized."})
     }
@@ -101,41 +102,66 @@ const create = (req, res) => {
 
 
 const update = (req, res) => {
+    console.log("req.body:", req.body)
     if (!req.session.currentUser) {
         return res.status(401).json({status: 401, message: "Unauthorized."})
     }
-    db.Reservation.findById(req.params.reservationId, (err, foundReservation) => {
-        foundReservation.startDate = req.body.startDate;
-        foundReservation.endDate = req.body.endDate;
-        foundReservation.totalPrice = req.body.totalPrice;
-        foundReservation.type = req.body.type;
-        foundReservation.deliveryAddress = req.body.deliveryAddress;
-        foundReservation.pickupAddress = req.body.pickupAddress;
-        
-        foundReservation.floaties = [];
-        req.body.floaties.forEach(floatie => {
-            updatedFloatie = {
-                floatie: floatie.floatie,
-                quantity: floatie.quantity,
-            }
-            foundReservation.floaties.push(updatedFloatie);
-        })
 
-        foundReservation.save((err, savedReservation) => {
-            if (err) {
-                return res.status(500).json({status: 500, message: "Something went wrong, please try again."})
-            }
-            res.json(savedReservation)
-        })
+    db.Reservation.findById(req.params.reservationId, (err, foundReservation) => {
+        if (err) {
+            return res.status(500).json({status: 500, message: "Something went wrong, please try again."})
+        }
+
+        console.log("--------------------------------")
+        console.log("found reservation:", foundReservation)
+        console.log("--------------------------------")
+
+    
+        if (req.body.type === "Pickup") {
+
+            db.Beach.findById(req.body.reservation.pickupAddress, (err, foundBeach) => {
+                if (err) {
+                    return res.status(500).json({status: 500, error: "Something went wrong."})
+                }
+
+                foundReservation.type = req.body.type;
+                console.log("req.body.type:", req.body.type)
+                console.log("foundReservation.type:", foundReservation.type)
+
+                foundReservation.pickupAddress = foundBeach;
+                console.log("foundBeach:", foundBeach)
+                console.log("foundReservation.pickupAddress:", foundReservation.pickupAddress)
+    
+                foundReservation.save((err, savedReservation) => {
+                    console.log("saving")
+                    if (err) {
+                        return res.status(500).json({status: 500, message: "Something went wrong, please try again."})
+                    }
+                    res.json(savedReservation)
+                }) 
+            })
+        } else if (foundReservation.type === "Delivery") {
+            foundReservation.type = req.body.reservation.type;
+            console.log("req.body.type:", req.body.type)
+            console.log("foundReservation.type:", foundReservation.type)
+
+            foundReservation.deliveryAddress = req.body.reservation.deliveryAddress;
+            console.log("req.body.reservation.deliveryAddress:", req.body.reservation.deliveryAddress)
+            console.log("foundReservation.deliveryAddress:", foundReservation.deliveryAddress)
+
+            foundReservation.save((err, savedReservation) => {
+                console.log("saving")
+                if (err) {
+                    return res.status(500).json({status: 500, message: "Something went wrong, please try again."})
+                }
+                res.json(savedReservation)
+            })
+        }
     })
 }
+    
 
-// TODO - splice reservationId from beach.reservations and floatie.reservations
 const remove = (req, res) => {
-    // console.log(req.session)
-    // if (!req.session.currentUser) {
-    //     return res.status(401).json({status: 401, message: "Unauthorized."})
-    // }
     db.Reservation.findByIdAndDelete(req.params.reservationId, (err, deletedReservation) => {
         if (err) {
             return res.status(500).json({status: 500, message: "Something went wrong, please try again."})
