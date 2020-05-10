@@ -38,7 +38,9 @@ const userReservations = (req, res) => {
 
 // TODO - fix saving floaties
 const create = (req, res) => {
+    console.log("--------------------------------")
     console.log("req.body:", req.body)
+    console.log("--------------------------------")
     if (!req.session.currentUser) {
         return res.status(401).json({status: 401, message: "Unauthorized."})
     }
@@ -55,20 +57,21 @@ const create = (req, res) => {
     }
 
     // this works but doesn't make it into db.create
-    req.body.floaties.forEach(floatie => {
-        db.Floatie.findById(floatie.floatie, (err, foundFloatie) => {
-            if (err) {
-                return res.status(500).json({status: 500, error: "Something went wrong."})
-            }
-            console.log("foundFloatie", foundFloatie)
-            reservation.floaties.push({floatie: foundFloatie, quantity: floatie.quantity});
-            console.log("--------------------------------")
-            console.log("floaties", reservation.floaties)
-            console.log("--------------------------------")
-    })
-})
+//     req.body.floaties.forEach(floatie => {
+//         db.Floatie.findById(floatie.floatie, (err, foundFloatie) => {
+//             if (err) {
+//                 return res.status(500).json({status: 500, error: "Something went wrong."})
+//             }
+//             console.log("foundFloatie", foundFloatie)
+//             reservation.floaties.push({floatie: foundFloatie, quantity: floatie.quantity});
+//             console.log("--------------------------------")
+//             console.log("floaties", reservation.floaties)
+//             console.log("--------------------------------")
+//     })
+// })
 
-    if (reservation.pickupAddress !== "") {
+    if (reservation.type === "Pickup") {
+        console.log("got to pickup code block")
         db.Beach.findById(reservation.pickupAddress, (err, foundBeach) => {
             if (err) {
                 return res.status(500).json({status: 500, error: "Something went wrong."})
@@ -86,7 +89,8 @@ const create = (req, res) => {
             res.json(newReservation)
             }) 
         })
-    } else {
+    } else if (reservation.type === "Delivery") {
+        console.log("got to delivery code block")
         db.Reservation.create(reservation, (err, newReservation) => {
             console.log("--------------------------------")
             console.log("reservation", reservation)
@@ -111,27 +115,16 @@ const update = (req, res) => {
         if (err) {
             return res.status(500).json({status: 500, message: "Something went wrong, please try again."})
         }
-
-        console.log("--------------------------------")
-        console.log("found reservation:", foundReservation)
-        console.log("--------------------------------")
-
     
         if (req.body.type === "Pickup") {
-
             db.Beach.findById(req.body.reservation.pickupAddress, (err, foundBeach) => {
                 if (err) {
                     return res.status(500).json({status: 500, error: "Something went wrong."})
                 }
 
                 foundReservation.type = req.body.type;
-                console.log("req.body.type:", req.body.type)
-                console.log("foundReservation.type:", foundReservation.type)
-
                 foundReservation.pickupAddress = foundBeach;
-                console.log("foundBeach:", foundBeach)
-                console.log("foundReservation.pickupAddress:", foundReservation.pickupAddress)
-    
+
                 foundReservation.save((err, savedReservation) => {
                     console.log("saving")
                     if (err) {
