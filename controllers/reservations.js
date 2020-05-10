@@ -116,13 +116,13 @@ const update = (req, res) => {
             return res.status(500).json({status: 500, message: "Something went wrong, please try again."})
         }
     
-        if (req.body.type === "Pickup") {
+        if (req.body.reservation.type === "Pickup") {
             db.Beach.findById(req.body.reservation.pickupAddress, (err, foundBeach) => {
                 if (err) {
                     return res.status(500).json({status: 500, error: "Something went wrong."})
                 }
 
-                foundReservation.type = req.body.type;
+                foundReservation.type = req.body.reservation.type;
                 foundReservation.pickupAddress = foundBeach;
 
                 foundReservation.save((err, savedReservation) => {
@@ -133,7 +133,7 @@ const update = (req, res) => {
                     res.json(savedReservation)
                 }) 
             })
-        } else if (foundReservation.type === "Delivery") {
+        } else if (req.body.reservation.type === "Delivery") {
             foundReservation.type = req.body.reservation.type;
             console.log("req.body.type:", req.body.type)
             console.log("foundReservation.type:", foundReservation.type)
