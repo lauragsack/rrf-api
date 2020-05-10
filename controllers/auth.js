@@ -53,7 +53,8 @@ const login = (req, res) => {
             if (isMatch) {
                 req.session.currentUser = {id: foundUser._id};
                 console.log(req.session)
-                return res.status(200).json({status: 200, message: "Success", data: foundUser._id});
+                console.log("logging foundUser._id", foundUser._id)
+                return res.status(200).json({user: foundUser._id, status: 200, message: "Success"})
             } else {
                 return res.status(400).json({status: 400, message: "Email or password is incorrect."})
             }
