@@ -29,7 +29,7 @@ app.use(bodyParser.json())
 
 // Express Session - Auth
 app.use(session({
-    store: new MongoStore({url: process.env.MONGO_URI}),
+    store: new MongoStore({url: process.env.MONGODB_URI}),
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,

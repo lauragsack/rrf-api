@@ -7,6 +7,9 @@ const ctrl = require("../controllers");
 // Get user's reservations
 router.get("/user", ctrl.reservations.userReservations)
 
+// Get a reservation
+router.get("/:reservationId", ctrl.reservations.show)
+
 // Create reservation
 router.post("/", ctrl.reservations.create)
 
