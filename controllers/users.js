@@ -16,18 +16,7 @@ const show = (req, res) => {
     })
 }
 
-// TODO - delete this controller after testing
-const index = (req, res) => {
-    db.User.find({}, (err, allUsers) => {
-        if (err) {
-            return res.status(500).json({status: 500, error: "Something went wrong."})
-        }
-        res.json(allUsers)
-    })
-}
-
 
 module.exports = {
     show,
-    index
 }
