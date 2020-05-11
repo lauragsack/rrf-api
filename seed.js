@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const db = require("./models");
 require("dotenv").config()
-const dbUrl = process.env.MONGO_URI;
+const dbUrl = process.env.MONGODB_URI;
 const key = process.env.KEY;
 const fetch = require('node-fetch');
 
@@ -90,7 +90,7 @@ const newFloatie = [
         dogFriendly: true,
         goodFor: 1,
         deliverable: false,
-        photo: "https://i.imgur.com/HQLx6aU.jpg",
+        photo: "https://i.imgur.com/vWqGt9C.jpg",
         price: 35,
         reservations: []
     },

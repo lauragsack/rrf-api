@@ -7,6 +7,9 @@ const ctrl = require("../controllers");
 // Get user's reservations
 router.get("/user", ctrl.reservations.userReservations)
 
+// Get a reservation
+router.get("/:reservationId", ctrl.reservations.show)
+
 // Create reservation
 router.post("/", ctrl.reservations.create)
 
@@ -16,10 +19,6 @@ router.put("/:reservationId", ctrl.reservations.update)
 // Delete reservation
 router.delete("/:reservationId", ctrl.reservations.remove)
 
-// TODO - delete these routes after testing
-router.get("/", ctrl.reservations.allReservations)
-
-router.delete("/", ctrl.reservations.removeAllReservations)
 
 
 module.exports = router;
