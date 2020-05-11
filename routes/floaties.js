@@ -10,8 +10,5 @@ router.get("/", ctrl.floaties.index)
 // get a floatie by name
 router.get("/:name", ctrl.floaties.show)
 
-// TODO - delete this route when done testing
-router.put("/:name", ctrl.floaties.update)
-
 
 module.exports = router;
