@@ -115,10 +115,6 @@ const update = (req, res) => {
 }
     
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 1430559715af802233178cf57f71b86e576d4b08
 const remove = (req, res) => {
     db.Reservation.findByIdAndDelete(req.params.reservationId, (err, deletedReservation) => {
         if (err) {
