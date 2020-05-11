@@ -18,7 +18,7 @@ const show = (req, res) => {
     })
 }
 
-// TODO - delete this controller when done testing
+
 const update = (req, res) => {
     db.Floatie.findOne({name: req.params.name}, (err, foundFloatie) => {
         if (err) {

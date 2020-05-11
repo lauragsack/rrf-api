@@ -19,10 +19,6 @@ router.put("/:reservationId", ctrl.reservations.update)
 // Delete reservation
 router.delete("/:reservationId", ctrl.reservations.remove)
 
-// TODO - delete these routes after testing
-router.get("/", ctrl.reservations.allReservations)
-
-router.delete("/", ctrl.reservations.removeAllReservations)
 
 
 module.exports = router;

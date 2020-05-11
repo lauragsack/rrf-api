@@ -90,7 +90,7 @@ const newFloatie = [
         dogFriendly: true,
         goodFor: 1,
         deliverable: false,
-        photo: "https://i.imgur.com/HQLx6aU.jpg",
+        photo: "https://i.imgur.com/vWqGt9C.jpg",
         price: 35,
         reservations: []
     },
