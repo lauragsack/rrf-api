@@ -13,7 +13,7 @@ const routes = require("./routes");
 
 // Handle Cors
 const corsOptions = {
-    origin: ["http://localhost:3000", "https://stormy-eyrie-04598.herokuapp.com/"],
+    origin: ["http://localhost:3000", "https://russian-river-floaties.herokuapp.com/"],
     credentials: true,
     optionsSuccessStatus: 200
 }
