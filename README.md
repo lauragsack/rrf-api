@@ -1,7 +1,7 @@
 # Russian River Floaties
 
 ### About This Web App
-https://stormy-eyrie-04598.herokuapp.com/
+https://russian-river-floaties.herokuapp.com/
 
 The Russian River is my happy place. My sister and I float the river each summer. An integral part of the fun is the floaties, but they're also inconvenient. 
 
