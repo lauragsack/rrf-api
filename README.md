@@ -1,6 +1,6 @@
 # Russian River Floaties
 
-### About This Web App
+### About This App
 
 The Russian River is my happy place. My sister and I float the river each summer. An integral part of the fun is the floaties, but they're also inconvenient. 
 
@@ -8,10 +8,10 @@ If you live in a city or don't frequent a large body of water, you likely don't 
 
 I created this app to make floaties easy. Reserve online, pickup at the beach or get them delivered to wherever is convenient for you. Return them or get them picked back up when you're done.
 
-#### Check it out
-Reserve your floatie [here!](https://russian-river-floaties.herokuapp.com/)
-username: laura@dogs.com
-password: password
+#### Check Out Russian River Floaties
+Reserve your floatie [here!](https://russian-river-floaties.herokuapp.com/)  
+username: laura@dogs.com  
+password: password  
 
 ### User Stories
 For a complete list of Russian River Floaties user stories, checkout this [Trello board.](https://trello.com/invite/b/rULRgCqy/bf3c66380a67b21f309d5439a8a5b36a/floatie-project) See the "Post MVP" card list for RRF's future plans. See the "Bugs" card list for open bugs.
