@@ -1,13 +1,17 @@
 # Russian River Floaties
 
 ### About This Web App
-https://russian-river-floaties.herokuapp.com/
 
 The Russian River is my happy place. My sister and I float the river each summer. An integral part of the fun is the floaties, but they're also inconvenient. 
 
 If you live in a city or don't frequent a large body of water, you likely don't have a float handy. Before you can start floating, you first need to acquire a floatie. Then you need to get the floatie blown up (think falty pumps and paying for air). Next you need to transport the unwieldy inflated floatie to wherever you're staying and shuttle it back and forth to the river. Finally you need to deflate it before you leave and bring it home to collect dust. It's a process! 
 
 I created this app to make floaties easy. Reserve online, pickup at the beach or get them delivered to wherever is convenient for you. Return them or get them picked back up when you're done.
+
+#### Check it out
+Reserve your floatie [here!](https://russian-river-floaties.herokuapp.com/)
+username: laura@dogs.com
+password: password
 
 ### User Stories
 For a complete list of Russian River Floaties user stories, checkout this [Trello board.](https://trello.com/invite/b/rULRgCqy/bf3c66380a67b21f309d5439a8a5b36a/floatie-project) See the "Post MVP" card list for RRF's future plans. See the "Bugs" card list for open bugs.
